@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "falcon-evaluate"
+version = "0.1.0"
+description = "Falcon Evaluate is an open-source Python library designed to simplify the process of evaluating and validating open source LLM models such as llama2,mistral ,etc. This library aims to provide an easy-to-use toolkit for assessing the performance, bias, and general behavior of LLMs in various natural language understanding (NLU) tasks."
+authors = ["Praveen Govindaraj <praveengovi.analytics@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+numpy = "1.21"
+scipy = "^1.7"
+pandas = "<2.0"
+scikit-learn = "^1.3.1"
+nltk = "^3.8.1"
+sentence-transformers = "^2.2.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
