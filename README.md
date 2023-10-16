@@ -82,6 +82,95 @@ print(result)
 
 ```
 
+# Model Evaluation Results
+
+The following table shows the evaluation results of different models when prompted with a question. Various scoring metrics such as BLEU score, Jaccard similarity, Cosine similarity, and Semantic similarity have been used to evaluate the models. Additionally, composite scores like Falcon Score have also been calculated.
+
+## Evaluation Data
+
+| Prompt                         | Reference                     |
+|--------------------------------|-------------------------------|
+| What is the capital of France? | The capital of France is Paris.|
+
+## Model A Evaluation
+
+| Response                       | Scores |
+|--------------------------------|--------|
+| Paris is the capital of France |  |
+| **Scores**                     | **Values** |
+| BLEU Score                     | 5.55e-78 |
+| Jaccard Similarity             | 0.7143   |
+| Cosine Similarity              | 1.0000   |
+| Semantic Similarity            | 0.9628   |
+
+### Falcon Score (Model A)
+
+| Metric            | Value       |
+|-------------------|-------------|
+| Arithmetic Mean   | 0.6693      |
+| Weighted Sum      | 0.6693      |
+| Geometric Mean    | 4.42e-20    |
+| Harmonic Mean     | 2.22e-77    |
+| T-Statistic       | 1.291       |
+| P-Value           | 0.2873      |
+| F-Score           | 0.7692      |
+
+## Model B Evaluation
+
+| Response                    | Scores |
+|-----------------------------|--------|
+| Capital of France is Paris. |  |
+
+### Scores
+
+| Metric              | Value   |
+|---------------------|---------|
+| BLEU Score          | 0.6432  |
+| Jaccard Similarity  | 0.7143  |
+| Cosine Similarity   | 0.8466  |
+| Semantic Similarity | 0.9954  |
+
+### Falcon Score (Model B)
+
+| Metric            | Value       |
+|-------------------|-------------|
+| Arithmetic Mean   | 0.7999      |
+| Weighted Sum      | 0.7999      |
+| Geometric Mean    | 0.7888      |
+| Harmonic Mean     | 0.7781      |
+| T-Statistic       | 0.903       |
+| P-Value           | 0.4332      |
+| F-Score           | 0.7692      |
+
+## Model C Evaluation
+
+| Response                     | Scores |
+|------------------------------|--------|
+| Capital of France was Paris. |  |
+
+### Scores
+
+| Metric              | Value       |
+|---------------------|-------------|
+| BLEU Score          | 9.07e-155   |
+| Jaccard Similarity  | 0.5714      |
+| Cosine Similarity   | 0.5803      |
+| Semantic Similarity | 0.9881      |
+
+### Falcon Score (Model C)
+
+| Metric            | Value       |
+|-------------------|-------------|
+| Arithmetic Mean   | 0.5350      |
+| Weighted Sum      | 0.5350      |
+| Geometric Mean    | 2.34e-39    |
+| Harmonic Mean     | 3.63e-154   |
+| T-Statistic       | 1.178       |
+| P-Value           | 0.3237      |
+| F-Score           | 0.6154      |
+
+
+
 ## Key Features
 
 1. **Benchmarking:** Falcon Evaluate provides a set of pre-defined benchmarking tasks commonly used for evaluating LLMs, including text completion, sentiment analysis, question answering, and more. Users can easily assess model performance on these tasks.
