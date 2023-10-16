@@ -30,7 +30,7 @@ Falcon Evaluate is an open-source Python library designed to simplify the proces
 ## :shield: Installation
 
 ```bash
-pip install falcon_evaluate
+pip install falcon_evaluate -q
 ```
 
 
@@ -43,6 +43,10 @@ pip install -e .
 
 
 ## :fire: Quickstart
+
+###  Google Colab notebook
+
+- [Get start with falcon_evaluate](https://colab.research.google.com/drive/1h9E0Q5Fema9TkOiv0asyaSaHin1R0UN5?usp=sharing)
 
 ```python
 # Example usage
@@ -136,6 +140,8 @@ Project Organization
     │   │
     │
     └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
+
+
 
 
 --------
