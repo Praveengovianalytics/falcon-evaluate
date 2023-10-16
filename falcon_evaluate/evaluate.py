@@ -6,7 +6,7 @@ from sklearn.metrics import jaccard_score
 from sklearn.preprocessing import MultiLabelBinarizer
 from nltk import word_tokenize
 from sentence_transformers import SentenceTransformer, util
-from context_relevency import FalconScoreContextRelevancy
+from .context_relevancy import FalconScoreContextRelevancy
 import warnings
 warnings.filterwarnings("ignore")
 

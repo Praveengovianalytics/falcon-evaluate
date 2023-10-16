@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import warnings
-from  fevaluate import FalconEvaluator
+from .evaluate import FalconEvaluator
 warnings.filterwarnings("ignore")
 
 
@@ -85,8 +85,13 @@ class ModelScoreSummary:
 
         return evaluation_results
 
+
+
+
 """
 # Usage example:
+
+df = pd.DataFrame({'prompt': ["What is the capital of France?"],'reference': ["The capital of France is Paris."], 'Model A': ["Paris is the capital of France."],'Model B': ["Capital of France is Paris."]})
 
 # Ideally user will pass this dataframe as input "prompt" &  "reference" columns are mandatory and rest of the columns are model generated outputs
 
@@ -157,5 +162,4 @@ df = pd.DataFrame({
 
 model_score_summary = ModelScoreSummary(df)
 _ = model_score_summary.execute_summary()
-
 """
