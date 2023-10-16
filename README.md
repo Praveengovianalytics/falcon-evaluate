@@ -6,8 +6,8 @@
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Build Status](https://img.shields.io/travis/user/repo.svg)](https://github.com/Praveengovianalytics/falcon_evaluate)
-[![GitHub issues](https://img.shields.io/github/issues/user/repo.svg)](https://github.com/Praveengovianalytics/falcon_evaluate/issues)
-[![GitHub release](https://img.shields.io/github/release/Praveengovianalytics/falcon_evaluate.svg)](https://github.com/Praveengovianalytics/falcon_evaluate/releases)
+[![GitHub issues](https://img.shields.io/github/issues/Praveengovianalytics/falcon-evaluate)](https://github.com/Praveengovianalytics/falcon-evaluate/issues)
+[![GitHub release](https://img.shields.io/github/release/Praveengovianalytics/falcon_evaluate.svg)](https://github.com/Praveengovianalytics/falcon-evaluate/releases)
 
 <h4 align="center">
     <p>
