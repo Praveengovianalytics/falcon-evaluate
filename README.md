@@ -47,7 +47,12 @@ pip install -e .
 ```python
 # Example usage
 
-from falcon_evaluate.fevaluate_results import ModelScoreSummary  # Make sure the Falcon class is imported
+!pip install falcon_evaluate -q
+
+from falcon_evaluate.fevaluate_results import ModelScoreSummary
+import pandas as pd
+import nltk
+nltk.download('punkt')
 
 df = pd.DataFrame({
     'prompt': [

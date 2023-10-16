@@ -73,7 +73,7 @@ class ModelScoreSummary:
 
         evaluation_results = evaluator.evaluate()
 
-        print(evaluation_results)
+        #print(evaluation_results)
 
         #model_score_summary = ModelScoreSummary(evaluation_results)
 
@@ -86,12 +86,11 @@ class ModelScoreSummary:
         return evaluation_results
 
 
-
-
 """
+
 # Usage example:
 
-df = pd.DataFrame({'prompt': ["What is the capital of France?"],'reference': ["The capital of France is Paris."], 'Model A': ["Paris is the capital of France."],'Model B': ["Capital of France is Paris."]})
+#df = pd.DataFrame({'prompt': ["What is the capital of France?"],'reference': ["The capital of France is Paris."], 'Model A': ["Paris is the capital of France."],'Model B': ["Capital of France is Paris."]})
 
 # Ideally user will pass this dataframe as input "prompt" &  "reference" columns are mandatory and rest of the columns are model generated outputs
 
