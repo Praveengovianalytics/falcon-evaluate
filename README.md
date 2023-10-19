@@ -30,7 +30,7 @@ Falcon Evaluate is an open-source Python library designed to simplify the proces
 ## :shield: Installation
 
 ```bash
-pip install falcon_evaluate
+pip install falcon_evaluate -q
 ```
 
 
@@ -44,10 +44,19 @@ pip install -e .
 
 ## :fire: Quickstart
 
+###  Google Colab notebook
+
+- [Get start with falcon_evaluate](https://colab.research.google.com/drive/1h9E0Q5Fema9TkOiv0asyaSaHin1R0UN5?usp=sharing)
+
 ```python
 # Example usage
 
-from falcon_evaluate.fevaluate_results import ModelScoreSummary  # Make sure the Falcon class is imported
+!pip install falcon_evaluate -q
+
+from falcon_evaluate.fevaluate_results import ModelScoreSummary
+import pandas as pd
+import nltk
+nltk.download('punkt')
 
 df = pd.DataFrame({
     'prompt': [
@@ -72,6 +81,179 @@ result = model_score_summary.execute_summary()
 print(result)
 
 ```
+
+# Model Evaluation Results
+
+The following table shows the evaluation results of different models when prompted with a question. Various scoring metrics such as BLEU score, Jaccard similarity, Cosine similarity, and Semantic similarity have been used to evaluate the models. Additionally, composite scores like Falcon Score have also been calculated.
+
+## Evaluation Data
+
+| Prompt                         | Reference                     |
+|--------------------------------|-------------------------------|
+| What is the capital of France? | The capital of France is Paris.|
+
+## Model A Evaluation
+
+#### Readability and Complexity
+
+- ARI: 2.7
+- Flesch-Kincaid Grade Level: 2.9
+
+#### Language Modeling Performance
+
+- Perplexity: 112.17
+
+#### Text Toxicity
+
+- Toxicity Level: 0.09
+
+#### Text Similarity and Relevance
+
+- BLEU: 0.64
+- Cosine Similarity: 0.85
+- Semantic Similarity: 0.99
+- Jaccard Similarity: 0.71
+
+#### Information Retrieval
+
+- Precision: 0.83
+- Recall: 0.71
+- F1-Score: 0.77
+
+## Falcon Score (Model A)
+
+## Evaluation Categories Metrics
+
+Below are the computed metrics categorized under different evaluation categories:
+
+### Readability and Complexity
+
+- Arithmetic Mean: 1.65
+- Weighted Sum: 1.65
+- Geometric Mean: 1.59
+- Harmonic Mean: 1.53
+- T-Statistic: 2.12
+- P-Value: 0.28
+- F-Score: 0.00
+- Z-Score Normalization: [-1.00, 1.00]
+
+### Language Modeling Performance
+
+- Arithmetic Mean: 19.45
+- Weighted Sum: 19.45
+- Geometric Mean: 19.45
+- Harmonic Mean: 19.45
+- T-Statistic: NaN
+- P-Value: NaN
+- F-Score: 0.00
+- Z-Score Normalization: [NaN]
+
+### Text Toxicity
+
+- Arithmetic Mean: 0.046
+- Weighted Sum: 0.046
+- Geometric Mean: 0.046
+- Harmonic Mean: 0.046
+- T-Statistic: NaN
+- P-Value: NaN
+- F-Score: 0.00
+- Z-Score Normalization: [NaN]
+
+### Text Similarity and Relevance
+
+- Arithmetic Mean: 0.67
+- Weighted Sum: 0.67
+- Geometric Mean: 0.00
+- Harmonic Mean: 0.00
+- T-Statistic: 1.29
+- P-Value: 0.29
+- F-Score: 0.00
+- Z-Score Normalization: [-1.67, 0.82, 0.73, 0.11]
+
+### Information Retrieval
+
+- Arithmetic Mean: 0.77
+- Weighted Sum: 0.77
+- Geometric Mean: 0.77
+- Harmonic Mean: 0.77
+- T-Statistic: 11.23
+- P-Value: 0.01
+- F-Score: 0.77
+- Z-Score Normalization: [1.25, -1.19, -0.06]
+
+
+## Model B Evaluation
+
+| Response                    | Scores |
+|-----------------------------|--------|
+| Capital of France is Paris. |  |
+
+### Scores
+
+{
+    "Readability and Complexity": {
+        "ARI": 2.7,
+        "Flesch-Kincaid Grade Level": 2.9
+    },
+    "Language Modeling Performance": {
+        "Perplexity": 112.17
+    },
+    "Text Toxicity": {
+        "Toxicity Level": 0.09
+    },
+    "Text Similarity and Relevance": {
+        "BLEU": 0.64,
+        "Cosine Similarity": 0.85,
+        "Semantic Similarity": 0.99,
+        "Jaccard Similarity": 0.71
+    },
+    "Information Retrieval": {
+        "Precision": 0.83,
+        "Recall": 0.71,
+        "F1-Score": 0.77
+    }
+}
+
+### Falcon Score (Model B)
+
+| Metric            | Value       |
+|-------------------|-------------|
+| Arithmetic Mean   | 0.7999      |
+| Weighted Sum      | 0.7999      |
+| Geometric Mean    | 0.7888      |
+| Harmonic Mean     | 0.7781      |
+| T-Statistic       | 0.903       |
+| P-Value           | 0.4332      |
+| F-Score           | 0.7692      |
+
+## Model C Evaluation
+
+| Response                     | Scores |
+|------------------------------|--------|
+| Capital of France was Paris. |  |
+
+### Scores
+
+| Metric              | Value       |
+|---------------------|-------------|
+| BLEU Score          | 9.07e-155   |
+| Jaccard Similarity  | 0.5714      |
+| Cosine Similarity   | 0.5803      |
+| Semantic Similarity | 0.9881      |
+
+### Falcon Score (Model C)
+
+| Metric            | Value       |
+|-------------------|-------------|
+| Arithmetic Mean   | 0.5350      |
+| Weighted Sum      | 0.5350      |
+| Geometric Mean    | 2.34e-39    |
+| Harmonic Mean     | 3.63e-154   |
+| T-Statistic       | 1.178       |
+| P-Value           | 0.3237      |
+| F-Score           | 0.6154      |
+
+
 
 ## Key Features
 
@@ -131,6 +313,8 @@ Project Organization
     │   │
     │
     └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
+
+
 
 
 --------

@@ -1,1 +1,4 @@
 venv/
+venv_test/
+__pycache__/
+falcon_evaluate/__pycache__/

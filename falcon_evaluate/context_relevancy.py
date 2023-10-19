@@ -27,6 +27,8 @@ class FalconScoreContextRelevancy:
         return p_value
 
     def f_score(self, precision, recall):
+        if precision + recall == 0:
+            return 0.0
         return (2 * precision * recall) / (precision + recall)
 
     def z_score_normalization(self):
