@@ -94,26 +94,93 @@ The following table shows the evaluation results of different models when prompt
 
 ## Model A Evaluation
 
-| Response                       | Scores |
-|--------------------------------|--------|
-| Paris is the capital of France |  |
-| **Scores**                     | **Values** |
-| BLEU Score                     | 5.55e-78 |
-| Jaccard Similarity             | 0.7143   |
-| Cosine Similarity              | 1.0000   |
-| Semantic Similarity            | 0.9628   |
+#### Readability and Complexity
 
-### Falcon Score (Model A)
+- ARI: 2.7
+- Flesch-Kincaid Grade Level: 2.9
 
-| Metric            | Value       |
-|-------------------|-------------|
-| Arithmetic Mean   | 0.6693      |
-| Weighted Sum      | 0.6693      |
-| Geometric Mean    | 4.42e-20    |
-| Harmonic Mean     | 2.22e-77    |
-| T-Statistic       | 1.291       |
-| P-Value           | 0.2873      |
-| F-Score           | 0.7692      |
+#### Language Modeling Performance
+
+- Perplexity: 112.17
+
+#### Text Toxicity
+
+- Toxicity Level: 0.09
+
+#### Text Similarity and Relevance
+
+- BLEU: 0.64
+- Cosine Similarity: 0.85
+- Semantic Similarity: 0.99
+- Jaccard Similarity: 0.71
+
+#### Information Retrieval
+
+- Precision: 0.83
+- Recall: 0.71
+- F1-Score: 0.77
+
+## Falcon Score (Model A)
+
+## Evaluation Categories Metrics
+
+Below are the computed metrics categorized under different evaluation categories:
+
+### Readability and Complexity
+
+- Arithmetic Mean: 1.65
+- Weighted Sum: 1.65
+- Geometric Mean: 1.59
+- Harmonic Mean: 1.53
+- T-Statistic: 2.12
+- P-Value: 0.28
+- F-Score: 0.00
+- Z-Score Normalization: [-1.00, 1.00]
+
+### Language Modeling Performance
+
+- Arithmetic Mean: 19.45
+- Weighted Sum: 19.45
+- Geometric Mean: 19.45
+- Harmonic Mean: 19.45
+- T-Statistic: NaN
+- P-Value: NaN
+- F-Score: 0.00
+- Z-Score Normalization: [NaN]
+
+### Text Toxicity
+
+- Arithmetic Mean: 0.046
+- Weighted Sum: 0.046
+- Geometric Mean: 0.046
+- Harmonic Mean: 0.046
+- T-Statistic: NaN
+- P-Value: NaN
+- F-Score: 0.00
+- Z-Score Normalization: [NaN]
+
+### Text Similarity and Relevance
+
+- Arithmetic Mean: 0.67
+- Weighted Sum: 0.67
+- Geometric Mean: 0.00
+- Harmonic Mean: 0.00
+- T-Statistic: 1.29
+- P-Value: 0.29
+- F-Score: 0.00
+- Z-Score Normalization: [-1.67, 0.82, 0.73, 0.11]
+
+### Information Retrieval
+
+- Arithmetic Mean: 0.77
+- Weighted Sum: 0.77
+- Geometric Mean: 0.77
+- Harmonic Mean: 0.77
+- T-Statistic: 11.23
+- P-Value: 0.01
+- F-Score: 0.77
+- Z-Score Normalization: [1.25, -1.19, -0.06]
+
 
 ## Model B Evaluation
 
@@ -123,12 +190,29 @@ The following table shows the evaluation results of different models when prompt
 
 ### Scores
 
-| Metric              | Value   |
-|---------------------|---------|
-| BLEU Score          | 0.6432  |
-| Jaccard Similarity  | 0.7143  |
-| Cosine Similarity   | 0.8466  |
-| Semantic Similarity | 0.9954  |
+{
+    "Readability and Complexity": {
+        "ARI": 2.7,
+        "Flesch-Kincaid Grade Level": 2.9
+    },
+    "Language Modeling Performance": {
+        "Perplexity": 112.17
+    },
+    "Text Toxicity": {
+        "Toxicity Level": 0.09
+    },
+    "Text Similarity and Relevance": {
+        "BLEU": 0.64,
+        "Cosine Similarity": 0.85,
+        "Semantic Similarity": 0.99,
+        "Jaccard Similarity": 0.71
+    },
+    "Information Retrieval": {
+        "Precision": 0.83,
+        "Recall": 0.71,
+        "F1-Score": 0.77
+    }
+}
 
 ### Falcon Score (Model B)
 
