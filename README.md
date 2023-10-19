@@ -188,72 +188,30 @@ Below are the computed metrics categorized under different evaluation categories
 |-----------------------------|--------|
 | Capital of France is Paris. |  |
 
-### Scores
+## Model A Evaluation scores
 
-{
-    "Readability and Complexity": {
-        "ARI": 2.7,
-        "Flesch-Kincaid Grade Level": 2.9
-    },
-    "Language Modeling Performance": {
-        "Perplexity": 112.17
-    },
-    "Text Toxicity": {
-        "Toxicity Level": 0.09
-    },
-    "Text Similarity and Relevance": {
-        "BLEU": 0.64,
-        "Cosine Similarity": 0.85,
-        "Semantic Similarity": 0.99,
-        "Jaccard Similarity": 0.71
-    },
-    "Information Retrieval": {
-        "Precision": 0.83,
-        "Recall": 0.71,
-        "F1-Score": 0.77
-    }
-}
+### Readability and Complexity:
+- **ARI**: 2.7
+- **Flesch-Kincaid Grade Level**: 2.9
 
-### Falcon Score (Model B)
+### Language Modeling Performance:
+- **Perplexity**: 112.17
 
-| Metric            | Value       |
-|-------------------|-------------|
-| Arithmetic Mean   | 0.7999      |
-| Weighted Sum      | 0.7999      |
-| Geometric Mean    | 0.7888      |
-| Harmonic Mean     | 0.7781      |
-| T-Statistic       | 0.903       |
-| P-Value           | 0.4332      |
-| F-Score           | 0.7692      |
+### Text Toxicity:
+- **Toxicity Level**: 0.09
 
-## Model C Evaluation
+### Text Similarity and Relevance:
+- **BLEU**: 0.64
+- **Cosine Similarity**: 0.85
+- **Semantic Similarity**: 0.99
+- **Jaccard Similarity**: 0.71
 
-| Response                     | Scores |
-|------------------------------|--------|
-| Capital of France was Paris. |  |
+### Information Retrieval:
+- **Precision**: 0.83
+- **Recall**: 0.71
+- **F1-Score**: 0.77
 
-### Scores
-
-| Metric              | Value       |
-|---------------------|-------------|
-| BLEU Score          | 9.07e-155   |
-| Jaccard Similarity  | 0.5714      |
-| Cosine Similarity   | 0.5803      |
-| Semantic Similarity | 0.9881      |
-
-### Falcon Score (Model C)
-
-| Metric            | Value       |
-|-------------------|-------------|
-| Arithmetic Mean   | 0.5350      |
-| Weighted Sum      | 0.5350      |
-| Geometric Mean    | 2.34e-39    |
-| Harmonic Mean     | 3.63e-154   |
-| T-Statistic       | 1.178       |
-| P-Value           | 0.3237      |
-| F-Score           | 0.6154      |
-
-
+### Kindly refer the google colab notebook for more details
 
 ## Key Features
 
