@@ -541,6 +541,21 @@ docs = ["furo", "olefile", "sphinx (>=2.4)", "sphinx-copybutton", "sphinx-inline
 tests = ["check-manifest", "coverage", "defusedxml", "markdown2", "olefile", "packaging", "pyroma", "pytest", "pytest-cov", "pytest-timeout"]
 
 [[package]]
+name = "pyphen"
+version = "0.14.0"
+description = "Pure Python module to hyphenate text"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "pyphen-0.14.0-py3-none-any.whl", hash = "sha256:414c9355958ca3c6a3ff233f65678c245b8ecb56418fb291e2b93499d61cd510"},
+    {file = "pyphen-0.14.0.tar.gz", hash = "sha256:596c8b3be1c1a70411ba5f6517d9ccfe3083c758ae2b94a45f2707346d8e66fa"},
+]
+
+[package.extras]
+doc = ["sphinx", "sphinx_rtd_theme"]
+test = ["flake8", "isort", "pytest"]
+
+[[package]]
 name = "python-dateutil"
 version = "2.8.2"
 description = "Extensions to the standard Python datetime module"
@@ -1048,6 +1063,20 @@ files = [
 mpmath = ">=0.19"
 
 [[package]]
+name = "textstat"
+version = "0.7.3"
+description = "Calculate statistical features from text"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "textstat-0.7.3-py3-none-any.whl", hash = "sha256:cbd9d641aa5abff0852638f0489913f31ea52fe597ccbaa337b4fc2a44efd15e"},
+    {file = "textstat-0.7.3.tar.gz", hash = "sha256:60b63cf8949f45bbb3b4205e4411bbc1cd66df4c08aef12545811c7e6e24f011"},
+]
+
+[package.dependencies]
+pyphen = "*"
+
+[[package]]
 name = "threadpoolctl"
 version = "3.2.0"
 description = "threadpoolctl"
@@ -1273,13 +1302,13 @@ telegram = ["requests"]
 
 [[package]]
 name = "transformers"
-version = "4.34.0"
+version = "4.34.1"
 description = "State-of-the-art Machine Learning for JAX, PyTorch and TensorFlow"
 optional = false
 python-versions = ">=3.8.0"
 files = [
-    {file = "transformers-4.34.0-py3-none-any.whl", hash = "sha256:3f0187183a7f22c51ecbbc9eac5145df666c5b86bec6feed10e11f0363f3a1f9"},
-    {file = "transformers-4.34.0.tar.gz", hash = "sha256:cc2ae61bfbfaa45337fd9017326669fc60e4f55125f589d50da47819e3d6f504"},
+    {file = "transformers-4.34.1-py3-none-any.whl", hash = "sha256:d06ac09151d7b845e4a4acd6b143a591d946031ee67b4cbb20693b241920ffc0"},
+    {file = "transformers-4.34.1.tar.gz", hash = "sha256:1d0258d5a18063b66005bbe1e3276ec5943d9ab4ab47f020db1fd485cc40ea22"},
 ]
 
 [package.dependencies]
@@ -1371,4 +1400,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "9aa42b1d53916564be19ed527202a5066a87e24016359e3476fd7ad58a26888e"
+content-hash = "caa1a1181c7743f65ed6d3317d31e4a15b862ed733d66a7864af4a100286fccb"

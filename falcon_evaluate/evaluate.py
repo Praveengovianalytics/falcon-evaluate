@@ -7,8 +7,57 @@ from sklearn.preprocessing import MultiLabelBinarizer
 from nltk import word_tokenize
 from sentence_transformers import SentenceTransformer, util
 from .context_relevancy import FalconScoreContextRelevancy
+import textstat
+import torch
+from transformers import GPT2Tokenizer, GPT2LMHeadModel, BertTokenizer, BertForSequenceClassification
+
+
+
 import warnings
 warnings.filterwarnings("ignore")
+
+class TextMetricsCalculator:
+    def __init__(self):
+        # Initializing tokenizers and models to be used
+        self.gpt2_tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
+        self.gpt2_model = GPT2LMHeadModel.from_pretrained('gpt2')
+        self.bert_tokenizer = BertTokenizer.from_pretrained('unitary/toxic-bert')
+        self.bert_model = BertForSequenceClassification.from_pretrained('unitary/toxic-bert')
+
+    def calculate_perplexity(self, text):
+        # Tokenizing input text and calculating perplexity
+        inputs = self.gpt2_tokenizer(text, return_tensors='pt')
+        outputs = self.gpt2_model(**inputs, labels=inputs['input_ids'])
+        loss = outputs.loss
+        perplexity = torch.exp(loss)
+        return perplexity.item()
+
+    def calculate_ari(self, text):
+        # Calculating Automated Readability Index
+        return textstat.automated_readability_index(text)
+
+    def calculate_fk_grade_level(self, text):
+        # Calculating Flesch-Kincaid Grade Level
+        return textstat.flesch_kincaid_grade(text)
+
+    def calculate_toxicity(self, text):
+        # Tokenizing input text and calculating toxicity
+        inputs = self.bert_tokenizer(text, return_tensors='pt', truncation=True)
+        outputs = self.bert_model(**inputs)
+        probs = torch.softmax(outputs.logits, dim=-1)
+        toxicity = probs[0, 1].item()  # Assuming that the second class is the 'toxic' class
+        return toxicity
+
+    def compute_metrics(self, row):
+        # Calculating all metrics for a given row
+        metrics = {
+            'Perplexity': self.calculate_perplexity(row['model_generated_output']),
+            'ARI': self.calculate_ari(row['model_generated_output']),
+            'Toxicity Level': self.calculate_toxicity(row['model_generated_output']),
+            'Flesch-Kincaid Grade Level': self.calculate_fk_grade_level(row['model_generated_output'])
+        }
+        return pd.Series(metrics)
+
 
 
 class FalconEvaluator:
@@ -24,6 +73,7 @@ class FalconEvaluator:
         df (pd.DataFrame): A dataframe containing the data to be evaluated.
         """
         self.df = df
+        self.text_metrics_calculator = TextMetricsCalculator()
 
     def bleu_score(self) -> float:
 
@@ -104,7 +154,20 @@ class FalconEvaluator:
         return recall
 
 
-    def calculate_falcon_score(self, model_output, reference,weights):
+
+    def calculate_text_metrics(self, model_output):
+        """
+        Calculate text metrics using TextMetricsCalculator.
+        Parameters:
+        model_output (str): The output text from the model.
+        Returns:
+        dict: A dictionary containing the calculated text metrics.
+        """
+        row = pd.Series({'model_generated_output': model_output})  # Create a series to pass to compute_metrics
+        metrics_series = self.text_metrics_calculator.compute_metrics(row)
+        return metrics_series.to_dict()
+
+    def calculate_falcon_score(self, model_output, reference, categories_weights):
         """
         Calculates and aggregates multiple evaluation metrics along with Falcon scores.
 
@@ -118,29 +181,57 @@ class FalconEvaluator:
         """
         self.candidate = model_output
         self.reference = reference
-        scores = [self.bleu_score(), self.jaccard_similarity(),self.cosine_similarity(), self.semantic_similarity()]
-        scores_dict = {
-            "bleu_score": self.bleu_score(),
-            "jaccard_similarity": self.jaccard_similarity(),
-            "cosine_similarity": self.cosine_similarity(),
-            "semantic_similarity": self.semantic_similarity()
-        }
-        reference_scores = self.calculate_reference_scores(self.candidate, self.reference)
-        precision = self.calculate_precision(self.candidate, self.reference)
-        recall = self.calculate_recall(self.candidate, self.reference)
 
-        falcon = FalconScoreContextRelevancy(scores)
-        falcon_score = {
-            'Arithmetic Mean': falcon.arithmetic_mean(),
-            'Weighted Sum': falcon.weighted_sum(weights),
-            'Geometric Mean': falcon.geometric_mean(),
-            'Harmonic Mean': falcon.harmonic_mean(),
-            'T-Statistic': falcon.t_statistic(reference_scores),  # Define reference_scores
-            'P-Value': falcon.p_value(reference_scores),  # Define reference_scores
-            'F-Score': falcon.f_score(precision, recall),  # Define precision and recall
-            'Z-Score Normalization': falcon.z_score_normalization()
+        # Get the new text metrics
+        text_metrics = self.calculate_text_metrics(model_output)
+
+        # Organize metrics into specified categories
+        categories = {
+            "Readability and Complexity": {
+                "ARI": text_metrics.get("ARI"),
+                "Flesch-Kincaid Grade Level": text_metrics.get("Flesch-Kincaid Grade Level")
+            },
+            "Language Modeling Performance": {
+                "Perplexity": text_metrics.get("Perplexity")
+            },
+            "Text Toxicity": {
+                "Toxicity Level": text_metrics.get("Toxicity Level")
+            },
+            "Text Similarity and Relevance": {
+                "BLEU": self.bleu_score(),
+                "Cosine Similarity": self.cosine_similarity(),
+                "Semantic Similarity": self.semantic_similarity(),
+                "Jaccard Similarity": self.jaccard_similarity()
+            },
+            "Information Retrieval": {
+                "Precision": self.calculate_precision(self.candidate, self.reference),
+                "Recall": self.calculate_recall(self.candidate, self.reference),
+                "F1-Score": (2 * self.calculate_precision(self.candidate, self.reference) * self.calculate_recall(self.candidate, self.reference)) /
+                            (self.calculate_precision(self.candidate, self.reference) + self.calculate_recall(self.candidate, self.reference)) if (self.calculate_precision(self.candidate, self.reference) + self.calculate_recall(self.candidate, self.reference)) != 0 else 0
+            }
         }
-        return scores_dict,falcon_score
+
+        reference_scores = self.calculate_reference_scores(self.candidate, self.reference)
+
+        falcon = FalconScoreContextRelevancy([value for category in categories.values() for value in category.values()])
+
+        falcon_scores_by_category = {}
+
+        for category_name, metrics in categories.items():
+            falcon = FalconScoreContextRelevancy(list(metrics.values()))
+            falcon_scores_by_category[category_name] = {
+                'Arithmetic Mean': falcon.arithmetic_mean(),
+                'Weighted Sum': falcon.weighted_sum(categories_weights[category_name]),
+                'Geometric Mean': falcon.geometric_mean(),
+                'Harmonic Mean': falcon.harmonic_mean(),
+                'T-Statistic': falcon.t_statistic(reference_scores),
+                'P-Value': falcon.p_value(reference_scores),
+                'F-Score': falcon.f_score(metrics.get("Precision", 0), metrics.get("Recall", 0)),
+                'Z-Score Normalization': falcon.z_score_normalization()
+            }
+        print(categories)
+        return categories, falcon_scores_by_category
+
 
     def evaluate(self):
         results = []
@@ -149,10 +240,20 @@ class FalconEvaluator:
             prompt = row['prompt']
             reference = row['reference']
             evaluation_row = {'prompt': prompt, 'reference': reference}
-            weights = [0.25, 0.25, 0.25, 0.25]  # customize your weights here
+            #weights = [0.15, 0.15, 0.15, 0.15,0.10,0.10,0.10,0.10]  # customize your weights here
+
+            categories_weights = {
+            "Readability and Complexity":[0.5,0.5],
+            "Language Modeling Performance": [1],
+            "Text Toxicity": [1],
+            "Text Similarity and Relevance": [0.25,0.25,0.25,0.25],
+            "Information Retrieval": [0.33,0.33,0.34]
+            }
+
+
             for model in self.df.columns[2:]:  # Assuming model columns start from index 2
                 model_output = row[model]
-                scores_dict,falcon_score = self.calculate_falcon_score(model_output, reference,weights)
+                scores_dict,falcon_score = self.calculate_falcon_score(model_output, reference,categories_weights)
                 evaluation_row[model] = self.candidate
                 self.candidate = model_output
                 self.reference = reference
