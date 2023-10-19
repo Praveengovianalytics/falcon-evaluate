@@ -188,7 +188,7 @@ Below are the computed metrics categorized under different evaluation categories
 |-----------------------------|--------|
 | Capital of France is Paris. |  |
 
-## Model A Evaluation scores
+## Model B Evaluation scores
 
 ### Readability and Complexity:
 - **ARI**: 2.7
