@@ -96,8 +96,7 @@ The following table shows the evaluation results of different models when prompt
 
 To dive in more detail to evaluation metric, refer below link 
 
-[![falcon-evaluate details](https://praveengovianalytics.github.io/falcon-evaluate.github.io/)](falcon-evaluate details)
-
+[falcon-evaluate metrics in detail](https://praveengovianalytics.github.io/falcon-evaluate.github.io/)
 
 ## Evaluation Data
 
