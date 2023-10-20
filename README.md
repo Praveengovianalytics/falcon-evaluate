@@ -11,6 +11,7 @@
 [![GitHub release](https://img.shields.io/github/release/Praveengovianalytics/falcon-evaluate)](https://github.com/Praveengovianalytics/falcon-evaluate/releases)
 <a href="https://colab.research.google.com/drive/1h9E0Q5Fema9TkOiv0asyaSaHin1R0UN5?usp=sharing">
 <img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg">
+[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/Praveengovianalytics/falcon-evaluate)
 </a>
 <a href="https://www.python.org/">
 <img alt="Build" src="https://img.shields.io/badge/Made%20with-Python-1f425f.svg?color=green">
@@ -22,7 +23,6 @@
         <a href="#fire-quickstart">Quickstart</a> |
     <p>
 </h4>
-[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/Praveengovianalytics/falcon-evaluate)
 
 Falcon Evaluate
 ==============================
