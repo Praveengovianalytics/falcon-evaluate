@@ -64,6 +64,12 @@ import pandas as pd
 import nltk
 nltk.download('punkt')
 
+########
+# NOTE
+########
+
+# Make sure that your validation dataframe should have "prompt" & "reference" column & rest other columns are model generated responses
+
 df = pd.DataFrame({
     'prompt': [
         "What is the capital of France?"
