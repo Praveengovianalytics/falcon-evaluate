@@ -1,8 +1,8 @@
 import numpy as np
 import scipy.stats as stats
 
-class FalconScoreContextRelevancy:
 
+class FalconScoreContextRelevancy:
     def __init__(self, scores):
         self.scores = scores
 
