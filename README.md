@@ -94,6 +94,10 @@ print(result)
 
 The following table shows the evaluation results of different models when prompted with a question. Various scoring metrics such as BLEU score, Jaccard similarity, Cosine similarity, and Semantic similarity have been used to evaluate the models. Additionally, composite scores like Falcon Score have also been calculated.
 
+To dive in more detail to evaluation metric, refer below link 
+
+[falcon-evaluate metrics in detail](https://praveengovianalytics.github.io/falcon-evaluate.github.io/)
+
 ## Evaluation Data
 
 | Prompt                         | Reference                     |
