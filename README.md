@@ -1,9 +1,10 @@
 <div align="center">
-  <img src="img/Falcon_Evaluate.png" alt="Falcon Evaluate Logo">
+  <img src="img/Falcon_Evaluate.png" alt="Falcon Evaluate Logo" width="600">
 </div>
 
 # Falcon Evaluate
 
+### A Low-Code LLM - RAG Evaluation Solution
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Build Status](https://img.shields.io/travis/user/repo.svg)](https://github.com/Praveengovianalytics/falcon_evaluate)
@@ -24,16 +25,12 @@
     <p>
 </h4>
 
-Falcon Evaluate
-==============================
-
-Falcon Evaluate is an open-source Python library designed to simplify the process of evaluating and validating open source LLM models such as llama2,mistral ,etc. This library aims to provide an easy-to-use toolkit for assessing the performance, bias, and general behavior of LLMs in various natural language understanding (NLU) tasks.
 
 
-# Falcon Evaluate - A Language Model Validation Library
+# Falcon Evaluate - A Language Language Model ( LLM ) Validation Library
 
 ## Overview
-Falcon Evaluate is an open-source Python library designed to simplify the process of evaluating and validating Language Models (LLMs) such as GPT-3.5 and other similar models. This library aims to provide an easy-to-use toolkit for assessing the performance, bias, and general behavior of LLMs in various natural language understanding (NLU) tasks.
+Falcon Evaluate is an open-source Python library  aims to revolutionize the LLM - RAG evaluation process by offering a low-code solution. Our goal is to make the evaluation process as seamless and efficient as possible, allowing you to focus on what truly matters.This library aims to provide an easy-to-use toolkit for assessing the performance, bias, and general behavior of LLMs in various natural language understanding (NLU) tasks.
 
 ## :shield: Installation
 
@@ -62,6 +59,7 @@ pip install -e .
 !pip install falcon_evaluate -q
 
 from falcon_evaluate.fevaluate_results import ModelScoreSummary
+from falcon_evaluate.fevaluate_plot import ModelPerformancePlotter
 import pandas as pd
 import nltk
 nltk.download('punkt')
@@ -85,10 +83,17 @@ df = pd.DataFrame({
 })
 
 model_score_summary = ModelScoreSummary(df)
-result = model_score_summary.execute_summary()
+result,agg_score_df = model_score_summary.execute_summary()
 print(result)
 
+ModelPerformancePlotter(agg_score_df).get_falcon_performance_quadrant()
+
 ```
+<div align="left">
+  <img src="img/falcon_performance_quadrant.png" alt="Falcon Performance Quadrant">
+</div>
+
+#### Note - Same model with different config settings can be plotted for qualification to specific usecase.
 
 # Model Evaluation Results
 
