@@ -541,6 +541,21 @@ docs = ["furo", "olefile", "sphinx (>=2.4)", "sphinx-copybutton", "sphinx-inline
 tests = ["check-manifest", "coverage", "defusedxml", "markdown2", "olefile", "packaging", "pyroma", "pytest", "pytest-cov", "pytest-timeout"]
 
 [[package]]
+name = "plotly"
+version = "5.17.0"
+description = "An open-source, interactive data visualization library for Python"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "plotly-5.17.0-py2.py3-none-any.whl", hash = "sha256:7c84cdf11da162423da957bb093287134f2d6f170eb9a74f1459f825892247c3"},
+    {file = "plotly-5.17.0.tar.gz", hash = "sha256:290d796bf7bab87aad184fe24b86096234c4c95dcca6ecbca02d02bdf17d3d97"},
+]
+
+[package.dependencies]
+packaging = "*"
+tenacity = ">=6.2.0"
+
+[[package]]
 name = "pyphen"
 version = "0.14.0"
 description = "Pure Python module to hyphenate text"
@@ -1063,6 +1078,20 @@ files = [
 mpmath = ">=0.19"
 
 [[package]]
+name = "tenacity"
+version = "8.2.3"
+description = "Retry code until it succeeds"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "tenacity-8.2.3-py3-none-any.whl", hash = "sha256:ce510e327a630c9e1beaf17d42e6ffacc88185044ad85cf74c0a8887c6a0f88c"},
+    {file = "tenacity-8.2.3.tar.gz", hash = "sha256:5398ef0d78e63f40007c1fb4c0bff96e1911394d2fa8d194f77619c05ff6cc8a"},
+]
+
+[package.extras]
+doc = ["reno", "sphinx", "tornado (>=4.5)"]
+
+[[package]]
 name = "textstat"
 version = "0.7.3"
 description = "Calculate statistical features from text"
@@ -1400,4 +1429,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "caa1a1181c7743f65ed6d3317d31e4a15b862ed733d66a7864af4a100286fccb"
+content-hash = "83f15c8b4ea105fb0d27c0c6d87170589cd4b12f9ff406009b5693e89268a14f"
