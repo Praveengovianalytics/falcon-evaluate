@@ -70,10 +70,10 @@ class ModelScoreSummary:
 
         return summary_df
 
-    def execute_summary(self):
+    def execute_summary(self,use_relevance=True):
         evaluator = FalconEvaluator(self.data)
 
-        evaluation_results = evaluator.evaluate()
+        evaluation_results = evaluator.evaluate(use_relevance)
 
         # print(evaluation_results)
 
