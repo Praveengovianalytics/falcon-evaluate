@@ -11,7 +11,7 @@ from sklearn.metrics import jaccard_score
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.preprocessing import MultiLabelBinarizer
 from transformers import (BertForSequenceClassification, BertTokenizer,
-                          GPT2LMHeadModel, GPT2Tokenizer)
+                          GPT2LMHeadModel, GPT2Tokenizer,GPT2Config)
 
 from .context_relevancy import FalconScoreContextRelevancy
 
@@ -30,8 +30,8 @@ class TextMetricsCalculator:
 
     def calculate_perplexity(self, text):
         # Tokenizing input text and calculating perplexity
-        inputs = self.gpt2_tokenizer(text, return_tensors="pt", truncation=True)
-        outputs = self.gpt2_model(**inputs, labels=inputs["input_ids"], truncation=True)
+        inputs = self.gpt2_tokenizer(text, return_tensors="pt", max_length=1024, truncation=True)
+        outputs = self.gpt2_model(**inputs, labels=inputs["input_ids"])
         loss = outputs.loss
         perplexity = torch.exp(loss)
         return perplexity.item()
