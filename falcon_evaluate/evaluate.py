@@ -30,8 +30,8 @@ class TextMetricsCalculator:
 
     def calculate_perplexity(self, text):
         # Tokenizing input text and calculating perplexity
-        inputs = self.gpt2_tokenizer(text, return_tensors="pt")
-        outputs = self.gpt2_model(**inputs, labels=inputs["input_ids"])
+        inputs = self.gpt2_tokenizer(text, return_tensors="pt", truncation=True)
+        outputs = self.gpt2_model(**inputs, labels=inputs["input_ids"], truncation=True)
         loss = outputs.loss
         perplexity = torch.exp(loss)
         return perplexity.item()
