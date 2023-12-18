@@ -14,26 +14,46 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
   deploy:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
+
     - name: Set up Python
       uses: actions/setup-python@v3
       with:
         python-version: '3.x'
-    - name: Install dependencies
+
+    - name: Install Poetry
       run: |
-        python -m pip install --upgrade pip
-        pip install build
-    - name: Build package
-      run: python -m build
-    - name: Publish package
-      uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
-      with:
-        user: __token__
-        password: ${{ secrets.PYPI_API_TOKEN }}
+        curl -sSL https://install.python-poetry.org | python -
+
+    - name: Increment package version
+      run: poetry version patch
+
+    - name: Get Poetry version
+      run: echo "POETRY_VERSION=$(poetry version -s)" >> $GITHUB_ENV
+
+    - name: Configure Poetry
+      run: |
+        poetry config http-basic.pypi __token__ ${{ secrets.PYPI_API_TOKEN }}
+
+    - name: Install dependencies using Poetry
+      run: poetry install
+
+    - name: Build package with Poetry
+      run: poetry build
+
+    - name: Publish package with Poetry
+      run: poetry publish --build
+
+    - name: Create Git Tag
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git tag -a ${{ env.POETRY_VERSION }} -m "Release ${{ env.POETRY_VERSION }}"
+        git push origin ${{ env.POETRY_VERSION }}
