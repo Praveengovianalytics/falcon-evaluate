@@ -5,6 +5,7 @@
 # They are provided by a third-party and are governed by
 # separate terms of service, privacy policy, and support
 # documentation.
+
 name: Upload Python Package
 
 on:
@@ -13,7 +14,8 @@ on:
 
 permissions:
   contents: read
-  
+  id-token: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -30,6 +32,12 @@ jobs:
       run: |
         curl -sSL https://install.python-poetry.org | python -
 
+    - name: Increment package version
+      run: poetry version patch
+
+    - name: Get Poetry version
+      run: echo "POETRY_VERSION=$(poetry version -s)" >> $GITHUB_ENV
+
     - name: Configure Poetry
       run: |
         poetry config http-basic.pypi __token__ ${{ secrets.PYPI_API_TOKEN }}
@@ -42,3 +50,10 @@ jobs:
 
     - name: Publish package with Poetry
       run: poetry publish --build
+
+    - name: Create Git Tag
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git tag -a ${{ env.POETRY_VERSION }} -m "Release ${{ env.POETRY_VERSION }}"
+        git push origin ${{ env.POETRY_VERSION }}
