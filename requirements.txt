@@ -64,7 +64,7 @@ tomlkit==0.12.1
 torch==2.1.0
 torchvision==0.16.0
 tqdm==4.66.1
-transformers==4.34.0
+transformers==4.36.0
 trove-classifiers==2023.9.19
 typing-extensions==4.8.0
 urllib3==2.0.6
