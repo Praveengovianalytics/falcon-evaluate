@@ -11,7 +11,7 @@ from sklearn.metrics import jaccard_score
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.preprocessing import MultiLabelBinarizer
 from transformers import (BertForSequenceClassification, BertTokenizer,
-                          GPT2LMHeadModel, GPT2Tokenizer)
+                          GPT2LMHeadModel, GPT2Tokenizer,GPT2Config)
 
 from .context_relevancy import FalconScoreContextRelevancy
 
@@ -30,7 +30,7 @@ class TextMetricsCalculator:
 
     def calculate_perplexity(self, text):
         # Tokenizing input text and calculating perplexity
-        inputs = self.gpt2_tokenizer(text, return_tensors="pt")
+        inputs = self.gpt2_tokenizer(text, return_tensors="pt", max_length=1024, truncation=True)
         outputs = self.gpt2_model(**inputs, labels=inputs["input_ids"])
         loss = outputs.loss
         perplexity = torch.exp(loss)
@@ -170,7 +170,7 @@ class FalconEvaluator:
         metrics_series = self.text_metrics_calculator.compute_metrics(row)
         return metrics_series.to_dict()
 
-    def calculate_falcon_score(self, model_output, reference, categories_weights):
+    def calculate_falcon_score(self, model_output, reference, categories_weights, use_relevance):
         """
         Calculates and aggregates multiple evaluation metrics along with Falcon scores.
 
@@ -210,50 +210,50 @@ class FalconEvaluator:
                 "Precision": self.calculate_precision(self.candidate, self.reference),
                 "Recall": self.calculate_recall(self.candidate, self.reference),
                 "F1-Score": (
-                    2
-                    * self.calculate_precision(self.candidate, self.reference)
-                    * self.calculate_recall(self.candidate, self.reference)
-                )
-                / (
-                    self.calculate_precision(self.candidate, self.reference)
-                    + self.calculate_recall(self.candidate, self.reference)
-                )
+                                    2
+                                    * self.calculate_precision(self.candidate, self.reference)
+                                    * self.calculate_recall(self.candidate, self.reference)
+                            )
+                            / (
+                                    self.calculate_precision(self.candidate, self.reference)
+                                    + self.calculate_recall(self.candidate, self.reference)
+                            )
                 if (
-                    self.calculate_precision(self.candidate, self.reference)
-                    + self.calculate_recall(self.candidate, self.reference)
-                )
-                != 0
+                           self.calculate_precision(self.candidate, self.reference)
+                           + self.calculate_recall(self.candidate, self.reference)
+                   )
+                   != 0
                 else 0,
             },
         }
-
-        reference_scores = self.calculate_reference_scores(
-            self.candidate, self.reference
-        )
-
-        falcon = FalconScoreContextRelevancy(
-            [value for category in categories.values() for value in category.values()]
-        )
-
         falcon_scores_by_category = {}
 
-        for category_name, metrics in categories.items():
-            falcon = FalconScoreContextRelevancy(list(metrics.values()))
-            falcon_scores_by_category[category_name] = {
-                "Arithmetic Mean": falcon.arithmetic_mean(),
-                "Weighted Sum": falcon.weighted_sum(categories_weights[category_name]),
-                "Geometric Mean": falcon.geometric_mean(),
-                "Harmonic Mean": falcon.harmonic_mean(),
-                "T-Statistic": falcon.t_statistic(reference_scores),
-                "P-Value": falcon.p_value(reference_scores),
-                "F-Score": falcon.f_score(
-                    metrics.get("Precision", 0), metrics.get("Recall", 0)
-                ),
-                "Z-Score Normalization": falcon.z_score_normalization(),
-            }
+        if use_relevance:
+            reference_scores = self.calculate_reference_scores(
+                self.candidate, self.reference
+            )
+
+            falcon = FalconScoreContextRelevancy(
+                [value for category in categories.values() for value in category.values()]
+            )
+
+            for category_name, metrics in categories.items():
+                falcon = FalconScoreContextRelevancy(list(metrics.values()))
+                falcon_scores_by_category[category_name] = {
+                    "Arithmetic Mean": falcon.arithmetic_mean(),
+                    "Weighted Sum": falcon.weighted_sum(categories_weights[category_name]),
+                    "Geometric Mean": falcon.geometric_mean(),
+                    "Harmonic Mean": falcon.harmonic_mean(),
+                    "T-Statistic": falcon.t_statistic(reference_scores),
+                    "P-Value": falcon.p_value(reference_scores),
+                    "F-Score": falcon.f_score(
+                        metrics.get("Precision", 0), metrics.get("Recall", 0)
+                    ),
+                    "Z-Score Normalization": falcon.z_score_normalization(),
+                }
         return categories, falcon_scores_by_category
 
-    def evaluate(self):
+    def evaluate(self, use_relevance):
         results = []
 
         for index, row in self.df.iterrows():
@@ -271,11 +271,11 @@ class FalconEvaluator:
             }
 
             for model in self.df.columns[
-                2:
-            ]:  # Assuming model columns start from index 2
+                         2:
+                         ]:  # Assuming model columns start from index 2
                 model_output = row[model]
                 scores_dict, falcon_score = self.calculate_falcon_score(
-                    model_output, reference, categories_weights
+                    model_output, reference, categories_weights, use_relevance
                 )
                 evaluation_row[model] = self.candidate
                 self.candidate = model_output

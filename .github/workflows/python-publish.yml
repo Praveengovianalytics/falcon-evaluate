@@ -1,0 +1,59 @@
+# This workflow will upload a Python Package using Twine when a release is created
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python#publishing-to-package-registries
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Upload Python Package
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.x'
+
+    - name: Install Poetry
+      run: |
+        curl -sSL https://install.python-poetry.org | python -
+
+    - name: Increment package version
+      run: poetry version patch
+
+    - name: Get Poetry version
+      run: echo "POETRY_VERSION=$(poetry version -s)" >> $GITHUB_ENV
+
+    - name: Configure Poetry
+      run: |
+        poetry config http-basic.pypi __token__ ${{ secrets.PYPI_API_TOKEN }}
+
+    - name: Install dependencies using Poetry
+      run: poetry install
+
+    - name: Build package with Poetry
+      run: poetry build
+
+    - name: Publish package with Poetry
+      run: poetry publish --build
+
+    - name: Create Git Tag
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git tag -a ${{ env.POETRY_VERSION }} -m "Release ${{ env.POETRY_VERSION }}"
+        git push origin ${{ env.POETRY_VERSION }}
