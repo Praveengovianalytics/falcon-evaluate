@@ -67,7 +67,7 @@ tqdm==4.66.1
 transformers==4.36.0
 trove-classifiers==2023.9.19
 typing-extensions==4.8.0
-urllib3==2.0.6
+urllib3==2.0.7
 virtualenv==20.24.5
 xattr==0.10.1
 zipp==3.17.0
