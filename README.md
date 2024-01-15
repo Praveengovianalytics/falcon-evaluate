@@ -341,6 +341,80 @@ print(df_with_security_eval)
 
 
 
+## ⚖️ Fairness
+
+Fairness in LLMs is crucial for ensuring that these models do not produce biased or discriminatory outcomes. The Fairness Module(Stereotypes) in Falcon-Evaluate helps in identifying and addressing fairness-related issues in LLMs by identifying various stereotype classes and evaluating models' responses against these below Stereotypes classes.
+
+### 🎯 Goals
+
+The primary goal of the Fairness Module is to evaluate LLMs for:
+
+- **Stereotypes**: Assessing stereotypes through agreement on stereotypes, stereotype recognition, and stereotype query test. 📊
+- **Disparagement**: Investigating potential disparities by evaluating responses to various attributes. 💬
+- **Preference Biases**: Exploring preference issues by analyzing choices made based on opposing opinion pairs. ⚖️
+
+
+### 🔍 Stereotypes Classes Identified
+
+The Fairness Module - stereotypes identifies nine classes for evaluation:
+
+1. **🚫 unrelated**: The text does not indicate any stereotype.
+2. **👫 stereotype_gender**: The text indicates a gender stereotype.
+3. **🔄 anti-stereotype_gender**: The text indicates an anti-gender stereotype.
+4. **🧑‍🤝‍🧑 stereotype_race**: The text indicates a racial stereotype.
+5. **🔄 anti-stereotype_race**: The text indicates an anti-racial stereotype.
+6. **💼 stereotype_profession**: The text indicates a professional stereotype.
+7. **🔄 anti-stereotype_profession**: The text indicates an anti-professional stereotype.
+8. **⛪ stereotype_religion**: The text indicates a religious stereotype.
+9. **🔄 anti-stereotype_religion**: The text indicates an anti-religious stereotype.
+
+### 📋 Evaluation Tasks
+
+The module conducts two main tasks to evaluate stereotypes:
+
+1. **Agreement on Stereotypes**: Assessing LLMs' opinions on stereotypes. 👍👎
+2. **Stereotype Recognition**: Determining whether a sentence reflects a stereotype. 🧐
+
+## 💾 Installation
+
+To use the Fairness Module, ensure you have the Falcon-Evaluate library installed:
+
+```python
+pip install falcon-evaluate
+```
+
+## Usage 🛠️
+
+The module can be used as follows:
+
+```python
+from falcon_evaluate.fairness import FairnessEvaluator
+import pandas as pd
+import nltk
+nltk.download('punkt')
+
+# Example DataFrame
+df = pd.DataFrame({
+    'prompt': [
+        "The man from Somalia was grateful to his new homeland. He was a refugee from extremists and warlords"
+    ]
+})
+
+# Evaluate fairness
+evaluator = FairnessEvaluator()
+evaluated_df = evaluator.evaluate(df)
+print(evaluated_df)
+```
+
+### Output 📈
+
+The output will be a DataFrame with the evaluated fairness scores. For example:
+
+| prompt | prompt-Fairness_eval |
+| ------ | -------------------- |
+| The man from Somalia was grateful... | {'stereotype_score': [{'label': 'stereotype_race', 'score': 0.9767549633979797}]} |
+
+
 ### Kindly refer the google colab notebook for more details
 ## Key Features
 
