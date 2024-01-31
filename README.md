@@ -492,6 +492,72 @@ print(evaluated_df)
 | 9 | Selling personal data without consent is justified for business needs. | 0.0 | 1.0 | 0.0 |
 
 
+# Emotion Classification Module for GenAI Chat Applications
+
+## Introduction
+Welcome to the world of Falcon Evaluate User Analytics — Emotion Module! This isn’t just any tool; it’s your new buddy in understanding what your customers are really feeling when they chat with your GenAI app. Think of it as having a superpower to see beyond words, getting to the heart of every 😊, 😠, or 😢 in your customer conversations.
+
+Here’s the deal: We know that every chat your customer has with your AI is more than just words. It’s about feelings. That’s why we created the Emotion Module. It’s like having a smart friend who reads between the lines, telling you if your customers are happy, just okay, or maybe a bit upset. It’s all about making sure you really get what your customers are feeling, through emojis they use, like 👍 for ‘Great job!’ or 😞 for ‘Oh no!’.
+
+We crafted this tool with one big goal: to make your chats with customers not just smarter, but more human and relatable. Imagine being able to know exactly how your customer feels and being able to respond just right. That’s what the Emotion Module is here for. It’s easy to use, integrates with your chat data like a charm, and gives you insights that are all about making your customer interactions better, one chat at a time.
+
+So, get ready to transform your customer chats from just words on a screen to conversations filled with real, understood emotions. Falcon Evaluate’s Emotion Module is here to make every chat count!
+
+Positive:
+- 👍 approval
+- 😊 joy
+- 💕 caring
+- 😍 desire
+- 🥰 admiration
+- 🌟 optimism
+- ❤️ love
+- 🤩 excitement
+- 😂 amusement
+- 🙏 gratitude
+- 😇 pride
+
+Neutral:
+- 😐 neutral
+- 😮 realization
+- 🤔 curiosity
+- 😯 surprise
+
+Negative:
+- 😞 disappointment
+- 😢 sadness
+- 😒 annoyance
+- 🙅 disapproval
+- 😰 nervousness
+- 😠 anger
+- 😳 embarrassment
+- 😔 remorse
+- 🤢 disgust
+- 😭 grief
+- 😕 confusion
+- 😌 relief
+- 😨 fear
+
+
+## Installation
+```python
+!pip install falcon_evaluate -q
+
+from falcon_evaluate.user_analytics import Emotions
+import pandas as pd
+
+# Telecom - Customer Assistant Chatbot conversation
+data = {"Session_ID":{"0":"47629","1":"47629","2":"47629","3":"47629","4":"47629","5":"47629","6":"47629","7":"47629"},"User_Journey_Stage":{"0":"Awareness","1":"Consideration","2":"Consideration","3":"Purchase","4":"Purchase","5":"Service\/Support","6":"Service\/Support","7":"Loyalty\/Advocacy"},"Chatbot_Robert":{"0":"Robert: Hello! I'm Robert, your virtual assistant. How may I help you today?","1":"Robert: That's great to hear, Ramesh! We have a variety of plans that might suit your needs. Could you tell me a bit more about what you're looking for?","2":"Robert: I understand. Choosing the right plan can be confusing. Our Home Office plan offers high-speed internet with reliable customer support, which sounds like it might be a good fit for you. Would you like more details about this plan?","3":"Robert: The Home Office plan includes a 500 Mbps internet connection and 24\/7 customer support. It's designed for heavy usage and multiple devices. Plus, we're currently offering a 10% discount for the first six months. How does that sound?","4":"Robert: Not at all, Ramesh. Our team will handle everything, ensuring a smooth setup process at a time that's convenient for you. Plus, our support team is here to help with any questions or concerns you might have.","5":"Robert: Fantastic choice, Ramesh! I can set up your account and schedule the installation right now. Could you please provide some additional details? [Customer provides details and the purchase is completed.] Robert: All set! Your installation is scheduled, and you'll receive a confirmation email shortly. Remember, our support team is always here to assist you. Is there anything else I can help you with today?","6":"","7":"Robert: You're welcome, Ramesh! We're excited to have you on board. If you love your new plan, don't hesitate to tell your friends or give us a shoutout on social media. Have a wonderful day!"},"Customer_Ramesh":{"0":"Ramesh: Hi, I've recently heard about your new internet plans and I'm interested in learning more.","1":"Ramesh: Well, I need a reliable connection for my home office, and I'm not sure which plan is the best fit.","2":"Ramesh: Yes, please.","3":"Ramesh: That sounds quite good. But I'm worried about installation and setup. Is it complicated?","4":"Ramesh: Alright, I'm in. How do I proceed with the purchase?","5":"","6":"Ramesh: No, that's all for now. Thank you for your help, Robert.","7":"Ramesh: Will do. Thanks again!"}}
+
+# Create the DataFrame
+df = pd.DataFrame(data)
+
+#Compute emotion score with Falcon evaluate module
+remotions = Emotions()
+result_df = emotions.evaluate(df.loc[['Chatbot_Robert','Customer_Ramesh']])
+pd.concat([df[['Session_ID', 'User_Journey_Stage']],result_df], axis=1)
+
+```
+
 ### Kindly refer the google colab notebook for more details
 ## Key Features
 
